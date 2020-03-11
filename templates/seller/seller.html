@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %} | {{seller.name}} {% endblock %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<style>
+.checked {
+    color: orange;
+    
+}
+</style>
+
+{% block content %}
+
+<section id="showcase-inner" class="py-5 text-white">
+        <div class="container">
+          <div class="row text-center">
+            <div class="col-md-12">
+              <h1 class="display-4">About {{ seller.name }}</h1>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+    
+      <!-- Breadcrumb -->
+      <section id="bc" class="mt-3">
+        <div class="container">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item">
+                <!-- <a href="index.html"> -->
+                    <a href="{% url 'index' %}">
+                  <i class="fas fa-home"></i> Home</a>
+              </li>
+              <li class="breadcrumb-item active"> About</li>
+            </ol>
+          </nav>
+        </div>
+      </section>
+     
+          <!-- Team -->
+       <section id="team" class="py-5">
+          <div class="container">
+           
+            <div class="row text-center">
+              <div class="col-md-4">
+                      <img src="{{seller.photo.url}} " alt="" class="">
+                      <h4>{{seller.name}}</h4>
+                      <p class="text-success">
+                        <i class="fas fa-award text-success mb-3"></i>
+                         Realtor</p>
+                      <hr>
+                      <p>
+                        <i class="fas fa-phone"></i>{{seller.phone}}</p>
+                      <p>
+                        <i class="fas fa-envelope-open"></i> {{seller.email}}</p>
+                      </div>
+                 
+              
+      
+             
+            </div>
+          </div>
+        </section>
+    
+       
+     
+      <div class="container">
+    <p>Give rating and review to the realtor</p>
+      <span  onmouseover="starmark(this)" onclick="starmark(this)" id="1one" style="font-size:40px;cursor:pointer;"  class="fa fa-star checked"></span>
+      <span onmouseover="starmark(this)" onclick="starmark(this)" id="2one"  style="font-size:40px;cursor:pointer;" class="fa fa-star "></span>
+      <span onmouseover="starmark(this)" onclick="starmark(this)" id="3one"  style="font-size:40px;cursor:pointer;" class="fa fa-star "></span>
+      <span onmouseover="starmark(this)" onclick="starmark(this)" id="4one"  style="font-size:40px;cursor:pointer;" class="fa fa-star"></span>
+      <span onmouseover="starmark(this)" onclick="starmark(this)" id="5one"  style="font-size:40px;cursor:pointer;" class="fa fa-star"></span>
+      <br/>
+      <textarea  style="margin-top:5px;" class="form-control" rows="3" id="comment" placeholder="Enter your review"></textarea>
+      
+      <button  onclick="result()" type="button" style="margin-top:10px;margin-left:5px;" class=" mb-5 btn btn-lg btn-success">Submit</button>
+      </div> 
+       
+    <div class="comments">
+
+    </div>
+    </body>
+      <script>
+            var count;
+      
+            function starmark(item)
+            {
+            count=item.id[0];
+            sessionStorage.starRating = count;
+            var subid= item.id.substring(1);
+            for(var i=0;i<5;i++)
+            {
+            if(i<count)
+            {
+            document.getElementById((i+1)+subid).style.color="orange";
+            }
+            else
+            {
+            document.getElementById((i+1)+subid).style.color="black";
+            }
+            
+            
+            }
+            
+            }
+            
+            function result()
+            {
+            //Rating : Count
+            //Review : Comment(id)
+            alert("Rating : "+count+"\nReview : "+document.getElementById("comment").value);
+            }
+      
+      </script>
+      
+      
+     
+     
+    
+{% endblock %}
