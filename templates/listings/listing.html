@@ -9,7 +9,7 @@
 {% block content %}
 
 
-        <section id="showcase-inner" class="py-5 text-white">
+           <section id="showcase-inner" class="py-5 text-white">
                 <div class="container">
                 <div class="row text-center">
                     <div class="col-md-12">
@@ -216,7 +216,6 @@
                         </div>
                     </div>
                     <button class="btn-primary btn-block btn-lg" data-toggle="modal" data-target="#inquiryModal">Make An Inquiry</button>
-                    <button class="btn-primary btn-block btn-lg" data-toggle="modal" data-target="#FBModal">Ratings to the realtors work</button>
 
                     </div>
                 </div>
@@ -289,81 +288,6 @@
                 </div>
                 </div>
             </div>
-    <!-- feedback to the realtors work  -->
-    <div class="modal fade" id="FBModal" role="dialog">
-        <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-            <h5 class="modal-title" id="inquiryModalLabel">Give review and ratings to the realtors work</h5>
-            <button type="button" class="close" data-dismiss="modal">
-                <span>&times;</span>
-            </button>
-            </div>
-            <div class="modal-body">
-            <form action = "{% url 'feedback' %}" method = "POST">
-                {% csrf_token%}
-
-                {% if user.is_authenticated %}
-                  <input type="hidden" name = "user_id" value = "{{user.id}}">
-
-                {% else %}
-                   <input type="hidden" name = "user_id" value = "0" >
-
-
-                {%endif %}
-                <!-- <input type="hidden" name="realtor_email" value = "{{listing.realtor.email}}"> -->
-                <input type="hidden" name="listing_id" value = "{{listing.id}}">
-
-                <div class="form-group">
-                <label for="realtor" class="col-form-label">Realtor</label>
-                <input type="text" name="realtor_email" class="form-control" value="{{listing.realtor.name}}">
-                </div>
-                <div class="form-group">
-                <label for="name" class="col-form-label">Name:</label>
-                <input type="text" name="name" class="form-control"
-                {% if user.is_authenticated %}
-                value = "{{user.first_name}} {{user.last_name}}" 
-
-                {% endif %}
-
-                required>
-                </div>
-                <div class="form-group">
-                <label for="email" class="col-form-label">Email:</label>
-                <input type="email" name="email" class="form-control"
-                {% if user.is_authenticated %}
-                
-                value = "{{user.email}}" 
-
-                {% endif %}
-                
-                required>
-                </div>
-                <div class="form-group">
-                <label for="phone" class="col-form-label">Phone:</label>
-                <input type="text" name="phone" class="form-control">
-                </div>
-                <div class="form-group">
-                <label for="message" class="col-form-label">Review</label>
-                <textarea name="message" class="form-control"></textarea>
-                </div>
-                <div class="form-group">
-                    <select name="stars" class="form-control">
-                        <option selected="true" disabled="disabled">Rating </option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                    </select>
-                  </div>
-                <hr>
-                <input type="submit" value="Send" class="btn btn-block btn-secondary">
-            </form>
-            </div>
-        </div>
-        </div>
-    </div>
-   
+    
 
 {% endblock %}

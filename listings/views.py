@@ -93,15 +93,6 @@ def search(request):
     return render(request,'listings/search.html', context)
 
 
-# def seller(request,realtor_id):
-#     seller = get_object_or_404(Realtor, id = realtor_id, available = true)
-#     details = Realtor()
-#     context = {
-#         'seller' : seller,
-#         'details' : details
-#     }
-#     return render(request,'listings/seller.html',context)
-
 
 
 

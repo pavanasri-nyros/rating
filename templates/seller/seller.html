@@ -50,44 +50,98 @@
           <div class="container">
            
             <div class="row text-center">
-              <div class="col-md-4">
-                      <img src="{{seller.photo.url}} " alt="" class="">
+              <div class="col-md-12 ">
+                      <img src="{{seller.photo.url}} " alt=""  style="height:200px;width:200px;" class="">
                       <h4>{{seller.name}}</h4>
                       <p class="text-success">
                         <i class="fas fa-award text-success mb-3"></i>
                          Realtor</p>
-                      <hr>
-                      <p>
-                        <i class="fas fa-phone"></i>{{seller.phone}}</p>
-                      <p>
-                        <i class="fas fa-envelope-open"></i> {{seller.email}}</p>
                       </div>
-                 
-              
-      
              
+
             </div>
+            <div class="col-md-12 align-self-end">
+              <div class="container ">
+                <p>{{seller.description}}</p>
+              </div>
+            </div>
+            <div class="container text-center">
+                <p>
+                    <i class="fas fa-phone"></i>{{seller.phone}}</p>
+                  <p>
+                    <i class="fas fa-envelope-open"></i> {{seller.email}}</p>
+
+            </div>
+            
+            
           </div>
         </section>
-    
-       
-     
-      <div class="container">
-    <p>Give rating and review to the realtor</p>
-      <span  onmouseover="starmark(this)" onclick="starmark(this)" id="1one" style="font-size:40px;cursor:pointer;"  class="fa fa-star checked"></span>
-      <span onmouseover="starmark(this)" onclick="starmark(this)" id="2one"  style="font-size:40px;cursor:pointer;" class="fa fa-star "></span>
-      <span onmouseover="starmark(this)" onclick="starmark(this)" id="3one"  style="font-size:40px;cursor:pointer;" class="fa fa-star "></span>
-      <span onmouseover="starmark(this)" onclick="starmark(this)" id="4one"  style="font-size:40px;cursor:pointer;" class="fa fa-star"></span>
-      <span onmouseover="starmark(this)" onclick="starmark(this)" id="5one"  style="font-size:40px;cursor:pointer;" class="fa fa-star"></span>
-      <br/>
-      <textarea  style="margin-top:5px;" class="form-control" rows="3" id="comment" placeholder="Enter your review"></textarea>
-      
-      <button  onclick="result()" type="button" style="margin-top:10px;margin-left:5px;" class=" mb-5 btn btn-lg btn-success">Submit</button>
-      </div> 
-       
-    <div class="comments">
+        <hr>
+        <div class="container">
+        <div class="card my-4">
+            <h5 class="card-header">
+                Give rating and review to the realtor
+            </h5>
+            <div class="card-body">
+                <form action = "{% url 'seller' seller.id %}" method="POST">
 
-    </div>
+                    {% csrf_token %}
+                    <!-- <input type="hidden" name = "user_id" value = "{{user.id}}"> -->
+
+                    <div class="form-group">
+
+                        <input type="text" class = "form-control"  name = "name"
+                        {% if user.is_authenticated %}
+                        value ="{{user.first_name}} {{user.last_name}}" placeholder="Name"
+                        {% endif %}
+                        
+                        required>
+
+                    </div>
+                    <div name ="stars" id="rating" class = "mb-4">
+                        <span onmouseover="starmark(this)" onclick="starmark(this)" id="1one" name = "stars" value="1" style="font-size:40px;cursor:pointer;"  class="fa fa-star checked"></span>
+                        <span onmouseover="starmark(this)" onclick="starmark(this)" id="2one" name="stars" value="2" style="font-size:40px;cursor:pointer;" class="fa fa-star "></span>
+                        <span onmouseover="starmark(this)" onclick="starmark(this)" id="3one" name = "stars" value="3" style="font-size:40px;cursor:pointer;" class="fa fa-star "></span>
+                        <span onmouseover="starmark(this)" onclick="starmark(this)" id="4one" name = "stars" value="4" style="font-size:40px;cursor:pointer;" class="fa fa-star"></span>
+                        <span onmouseover="starmark(this)" onclick="starmark(this)" id="5one" name= "stars" value="5" style="font-size:40px;cursor:pointer;" class="fa fa-star"></span>
+                      </div>
+
+                    <div class="form-group">
+
+                        <textarea name="message"  rows="3"` class="form-control" placeholder="Enter your review here"></textarea>
+
+                    </div>
+                    
+
+                    <button type="submit" class="btn btn-primary">Submit</button>
+
+                </form>
+            </div>
+        </div>
+      </div>
+                  <!-- For displaying the messages -->
+                  {% for rat in ratings %}
+                  <div class="container media mb-4">
+                      <div class="media-body">
+                           <h5 class="mt-0">{{rat.name}}</h5>
+                           {{rat.message}}
+              
+                           <h6 class = "text-success">Rating:-  {{rat.stars}} out of <span class = "text-primary">5</span></h6>
+                      </div>
+              
+                      <code>{{rat.date_comment}}</code>
+                      <hr>
+                    
+              
+                  </div>
+                  {% empty %}
+                  <p>No comments yet</p>
+
+                {% endfor %}
+                  
+        
+              
+              
     </body>
       <script>
             var count;
@@ -113,12 +167,12 @@
             
             }
             
-            function result()
+            /*function result()
             {
             //Rating : Count
             //Review : Comment(id)
             alert("Rating : "+count+"\nReview : "+document.getElementById("comment").value);
-            }
+            }*/
       
       </script>
       
